@@ -35,6 +35,14 @@
 
 /* Parameters strings for track files */
 
+#define TRK_SECT_EXT "Extension"
+
+#define TRK_LST_MODS "Modifications"
+#define TRK_ATT_NNAME "Next name"
+#define TRK_ATT_PNAME "Previous name"
+#define TRK_ATT_NSIDE "Next side"
+#define TRK_ATT_PSIDE "Previous side"
+
 #define TRK_SECT_HDR	"Header"
 
 #define TRK_ATT_WIDTH	"width"
@@ -387,6 +395,8 @@ typedef struct trackSeg {
     tRoadCam        *cam;	/* current camera */
     struct trackSeg *next;	/**< Next segment */
     struct trackSeg *prev;	/**< Previous segment */
+    struct trackSeg *left;  /**< Left segment */
+    struct trackSeg *right; /**< Right segment */
 
 	// Union to avoid code duplication for left/right side cases and to
 	// keep compatibility of code. The side definition is so ugly to

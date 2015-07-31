@@ -69,6 +69,17 @@ TrackBuildv1(char *trackfile)
     return theTrack;
 }
 
+void
+ReadTrackExt(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext)
+{
+	char path[256];
+	sprintf(path, "%s/%s", TRK_SECT_EXT, TRK_LST_MODS);
+	GfParmListSeekFirst(TrackHandle, path);
+	do {
+		// TODO: get modification and add link
+	} while (/*GfParmLstSeekNext*/);
+}
+
 tTrack *
 TrackBuildEx(char *trackfile)
 {
@@ -93,8 +104,11 @@ TrackBuildEx(char *trackfile)
     case 4:
 	ReadTrack4(theTrack, TrackHandle, &theCamList, 1);
 	break;
+    case 5:
+    ReadTrack4(theTrack, TrackHandle, &theCamList, 1);
+    ReadTrackExt(theTrack, TrackHandle, &theCamList, 1);
+    break;
     }
-    
     return theTrack;
 }
 
