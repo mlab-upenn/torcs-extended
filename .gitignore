@@ -8,3 +8,4 @@ export
 *.depend
 *~
 *-bin
+src/libs/txml/gennmtab/gennmtab
