@@ -4,3 +4,7 @@
 *.so
 *.lib
 config.*
+export
+*.depend
+*~
+*-bin

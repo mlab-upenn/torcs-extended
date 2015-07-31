@@ -1,2 +1,0 @@
-TORCS_BASE = /home/mlab/torcs
-MAKE_DEFAULT = /home/mlab/torcs/Make-default.mk
