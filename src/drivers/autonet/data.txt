@@ -1,0 +1,12 @@
+1)   0x0a,0x0b works - displays as 10,11 
+
+
+
+Doesn't Work:
+
+
+1) ( uint8_t) (6) 
+2)   0x01 to 0x09 doesnt work - displays at 0
+3) ( uint8_t) ('6') 
+4)  (char)('6')
+5)  (signed char)('6')

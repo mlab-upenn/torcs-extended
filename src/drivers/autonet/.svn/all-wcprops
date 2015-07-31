@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet
+END
+autonet.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet/autonet.cpp
+END
+serial.c
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet/serial.c
+END
+timer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet/timer.cpp
+END
+serial.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/ese519autonet/!svn/ver/21/trunk/TORCS/autonet/serial.h
+END
+timer.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet/timer.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet/Makefile
+END
+autonet.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/ese519autonet/!svn/ver/37/trunk/TORCS/autonet/autonet.xml
+END
