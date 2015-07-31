@@ -69,16 +69,37 @@ TrackBuildv1(char *trackfile)
     return theTrack;
 }
 
+struct intersectionSpec {
+	char * next_name;
+	char * prev_name;
+	char * next_side;
+	char * prev_side;
+};
+
+void
+AddLink(tTrack* track, intersectionSpec modification) {
+	// modify the track based on the specification
+}
+
 void
 ReadTrackExt(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext)
 {
 	char path[256];
+	char modification_path[256];
 	sprintf(path, "%s/%s", TRK_SECT_EXT, TRK_LST_MODS);
 	GfParmListSeekFirst(TrackHandle, path);
-    /*
+
 	do {
-		// TODO: get modification and add link
-	} while (GfParmLstSeekNext);*/
+		char * current_mod_name = GfParmListGetCurEltName(TrackHandle, path);
+		sprintf(modification_path, "%s/%s/%s", TRK_SECT_EXT, TRK_LST_MODS, current_mod_name);
+		intersectionSpec mod;
+		mod.next_name = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_NNAME, NULL);
+		mod.prev_name = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_PNAME, NULL);
+		mod.next_side = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_NSIDE, NULL);
+		mod.prev_side = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_PSIDE, NULL);
+		AddLink(theTrack, mod);
+		free(current_mod_name);
+	} while (GfParmListSeekNext(TrackHandle, path) == 0);
 }
 
 tTrack *
