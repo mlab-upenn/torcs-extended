@@ -75,9 +75,10 @@ ReadTrackExt(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext)
 	char path[256];
 	sprintf(path, "%s/%s", TRK_SECT_EXT, TRK_LST_MODS);
 	GfParmListSeekFirst(TrackHandle, path);
+    /*
 	do {
 		// TODO: get modification and add link
-	} while (/*GfParmLstSeekNext*/);
+	} while (GfParmLstSeekNext);*/
 }
 
 tTrack *
