@@ -24,6 +24,8 @@
 
 #include <tgf.h>
 #include <track.h>
+#include <string.h>
+#include <assert.h>
 #include "trackinc.h"
 
 const tdble DEGPRAD = 180.0 / PI;   /* degrees per radian */
@@ -78,7 +80,30 @@ struct intersectionSpec {
 
 void
 AddLink(tTrack* track, intersectionSpec modification) {
-	// modify the track based on the specification
+
+	// find the two segments to join
+	tTrackSeg * next_segment = track->seg;
+	tTrackSeg * prev_segment = track->seg;
+	for (int seg_number = 0; seg_number < track->nseg;
+			seg_number++, next_segment = next_segment->next) {
+		if (!strcmp(next_segment->name, modification.next_name)) {
+			break;
+		}
+	}
+	for (int seg_number = 0; seg_number < track->nseg;
+			seg_number++, prev_segment = prev_segment->next) {
+		if (!strcmp(prev_segment->name, modification.prev_name)) {
+			break;
+		}
+	}
+
+	// assert that the two segments are joinable
+	assert(next_segment->type == TR_STR);
+	assert(prev_segment->type == TR_STR);
+	assert(fabs(next_segment->length - next_segment->width) < 0.01);
+	assert(fabs(prev_segment->length - prev_segment->width) < 0.01);
+	// TODO: add angle confirmation so we know segs are parallel
+	// TODO: add the link
 }
 
 void
