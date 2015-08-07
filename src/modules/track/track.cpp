@@ -72,10 +72,10 @@ TrackBuildv1(char *trackfile)
 }
 
 struct intersectionSpec {
-	char * next_name;
-	char * prev_name;
-	char * next_side;
-	char * prev_side;
+	const char * next_name;
+	const char * prev_name;
+	const char * next_side;
+	const char * prev_side;
 };
 
 void
@@ -103,6 +103,24 @@ AddLink(tTrack* track, intersectionSpec modification) {
 	assert(fabs(next_segment->length - next_segment->width) < 0.01);
 	assert(fabs(prev_segment->length - prev_segment->width) < 0.01);
 	// TODO: add angle confirmation so we know segs are parallel
+	FILE * f = fdopen(9, "w");
+#define REPORT(x) fprintf(f, #x " is %f\n", x)
+	REPORT(next_segment->angle[TR_ZS]);
+	REPORT(next_segment->angle[TR_ZE]);
+	REPORT(next_segment->angle[TR_YR]);
+	REPORT(next_segment->angle[TR_YL]);
+	REPORT(next_segment->angle[TR_XS]);
+	REPORT(next_segment->angle[TR_XE]);
+	REPORT(next_segment->angle[TR_CS]);
+	REPORT(prev_segment->angle[TR_ZS]);
+	REPORT(prev_segment->angle[TR_ZE]);
+	REPORT(prev_segment->angle[TR_YR]);
+	REPORT(prev_segment->angle[TR_YL]);
+	REPORT(prev_segment->angle[TR_XS]);
+	REPORT(prev_segment->angle[TR_XE]);
+	REPORT(prev_segment->angle[TR_CS]);
+	fclose(f);
+
 	// TODO: add the link
 }
 
@@ -260,6 +278,8 @@ freeSeg(tTrackSeg *seg)
 	if (seg->rside) {
 		freeSeg(seg->rside);
 	}
+	free(seg->right);
+	free(seg->left);
 	free(seg);
 }
 
