@@ -105,6 +105,11 @@ AddLink(tTrack* track, intersectionSpec modification) {
 	// TODO: add angle confirmation so we know segs are parallel
 	FILE * f = fdopen(9, "w");
 #define REPORT(x) fprintf(f, #x " is %f\n", x)
+#define REPORT_S(x) fprintf(f, #x " is %s\n", x)
+	REPORT_S(modification.next_name);
+	REPORT_S(modification.next_side);
+	REPORT_S(modification.prev_name);
+	REPORT_S(modification.next_side);
 	REPORT(next_segment->angle[TR_ZS]);
 	REPORT(next_segment->angle[TR_ZE]);
 	REPORT(next_segment->angle[TR_YR]);
