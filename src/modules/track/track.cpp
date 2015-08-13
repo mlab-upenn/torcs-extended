@@ -37,40 +37,6 @@ static void	*TrackHandle;
 static void GetTrackHeader(void *TrackHandle);
 
 
-/*
- * External function used to (re)build a track
- * from the track file
- */
-tTrack *
-TrackBuildv1(char *trackfile)
-{
-    TrackShutdown();
-
-    theTrack = (tTrack*)calloc(1, sizeof(tTrack));
-    theCamList = (tRoadCam*)NULL;
-
-    theTrack->params = TrackHandle = GfParmReadFile (trackfile, GFPARM_RMODE_STD | GFPARM_RMODE_CREAT | GFPARM_RMODE_PRIVATE);
-    
-    theTrack->filename = strdup(trackfile);
-
-    GetTrackHeader(TrackHandle);
-
-    
-    switch(theTrack->version) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-	ReadTrack3(theTrack, TrackHandle, &theCamList, 0);
-	break;
-    case 4:
-	ReadTrack4(theTrack, TrackHandle, &theCamList, 0);
-	break;
-    }
-
-    return theTrack;
-}
-
 struct intersectionSpec {
 	const char * next_name;
 	const char * prev_name;
@@ -133,21 +99,57 @@ void
 ReadTrackExt(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext)
 {
 	char path[256];
-	char modification_path[256];
 	sprintf(path, "%s/%s", TRK_SECT_EXT, TRK_LST_MODS);
 	GfParmListSeekFirst(TrackHandle, path);
 
 	do {
-		char * current_mod_name = GfParmListGetCurEltName(TrackHandle, path);
-		sprintf(modification_path, "%s/%s/%s", TRK_SECT_EXT, TRK_LST_MODS, current_mod_name);
+		//char * current_mod_name = GfParmListGetCurEltName(TrackHandle, path);
+		//sprintf(modification_path, "%s/%s/%s", TRK_SECT_EXT, TRK_LST_MODS, current_mod_name);
 		intersectionSpec mod;
-		mod.next_name = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_NNAME, NULL);
-		mod.prev_name = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_PNAME, NULL);
-		mod.next_side = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_NSIDE, NULL);
-		mod.prev_side = GfParmGetCurStr(TrackHandle, modification_path, TRK_ATT_PSIDE, NULL);
+		mod.next_name = GfParmGetCurStr(TrackHandle, path, TRK_ATT_NNAME, NULL);
+		mod.prev_name = GfParmGetCurStr(TrackHandle, path, TRK_ATT_PNAME, NULL);
+		mod.next_side = GfParmGetCurStr(TrackHandle, path, TRK_ATT_NSIDE, NULL);
+		mod.prev_side = GfParmGetCurStr(TrackHandle, path, TRK_ATT_PSIDE, NULL);
 		AddLink(theTrack, mod);
-		free(current_mod_name);
+		//free(current_mod_name);
 	} while (GfParmListSeekNext(TrackHandle, path) == 0);
+}
+
+/*
+ * External function used to (re)build a track
+ * from the track file
+ */
+tTrack *
+TrackBuildv1(char *trackfile)
+{
+    TrackShutdown();
+
+    theTrack = (tTrack*)calloc(1, sizeof(tTrack));
+    theCamList = (tRoadCam*)NULL;
+
+    theTrack->params = TrackHandle = GfParmReadFile (trackfile, GFPARM_RMODE_STD | GFPARM_RMODE_CREAT | GFPARM_RMODE_PRIVATE);
+
+    theTrack->filename = strdup(trackfile);
+
+    GetTrackHeader(TrackHandle);
+
+
+    switch(theTrack->version) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+	ReadTrack3(theTrack, TrackHandle, &theCamList, 0);
+	break;
+    case 4:
+	ReadTrack4(theTrack, TrackHandle, &theCamList, 0);
+	break;
+    case 5:
+    ReadTrack4(theTrack, TrackHandle, &theCamList, 0);
+    ReadTrackExt(theTrack, TrackHandle, &theCamList, 0);
+    }
+
+    return theTrack;
 }
 
 tTrack *
@@ -174,10 +176,6 @@ TrackBuildEx(char *trackfile)
     case 4:
 	ReadTrack4(theTrack, TrackHandle, &theCamList, 1);
 	break;
-    case 5:
-    ReadTrack4(theTrack, TrackHandle, &theCamList, 1);
-    ReadTrackExt(theTrack, TrackHandle, &theCamList, 1);
-    break;
     }
     return theTrack;
 }
