@@ -151,7 +151,7 @@ ReadTrackExt(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext)
 }
 
 tTrack *
-TrackBuildEx(char *trackfile)
+TrackBuild(char *trackfile)
 {
     void	*TrackHandle;
 

@@ -26,8 +26,7 @@ extern void TrackShutdown(void);
 extern void ReadTrack3(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext);
 extern void ReadTrack4(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext);
 
-extern tTrack *TrackBuildv1(char *trackfile);
-extern tTrack *TrackBuildEx(char *trackfile);
+extern tTrack *TrackBuild(char *trackfile);
 extern tdble TrackHeightG(tTrackSeg *seg, tdble x, tdble y);
 extern tdble TrackHeightL(tTrkLocPos *p);
 extern void TrackGlobal2Local(tTrackSeg *segment, tdble X, tdble Y, tTrkLocPos *p, int sides);
