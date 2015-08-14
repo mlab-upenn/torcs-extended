@@ -51,8 +51,8 @@ trackInit(int /* index */, void *pt)
 {
     tTrackItf	*ptf = (tTrackItf*)pt;
     
-    ptf->trkBuild         = TrackBuildv1;
-    ptf->trkBuildEx       = TrackBuildEx;
+    ptf->trkBuild         = TrackBuild;
+    ptf->trkBuildEx       = TrackBuild;
     ptf->trkHeightG       = TrackHeightG;
     ptf->trkHeightL       = TrackHeightL;
     ptf->trkGlobal2Local  = TrackGlobal2Local;

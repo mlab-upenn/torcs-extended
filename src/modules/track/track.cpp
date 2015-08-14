@@ -115,45 +115,8 @@ ReadTrackExt(tTrack *theTrack, void *TrackHandle, tRoadCam **camList, int ext)
 	} while (GfParmListSeekNext(TrackHandle, path) == 0);
 }
 
-/*
- * External function used to (re)build a track
- * from the track file
- */
 tTrack *
-TrackBuildv1(char *trackfile)
-{
-    TrackShutdown();
-
-    theTrack = (tTrack*)calloc(1, sizeof(tTrack));
-    theCamList = (tRoadCam*)NULL;
-
-    theTrack->params = TrackHandle = GfParmReadFile (trackfile, GFPARM_RMODE_STD | GFPARM_RMODE_CREAT | GFPARM_RMODE_PRIVATE);
-
-    theTrack->filename = strdup(trackfile);
-
-    GetTrackHeader(TrackHandle);
-
-
-    switch(theTrack->version) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-	ReadTrack3(theTrack, TrackHandle, &theCamList, 0);
-	break;
-    case 4:
-	ReadTrack4(theTrack, TrackHandle, &theCamList, 0);
-	break;
-    case 5:
-    ReadTrack4(theTrack, TrackHandle, &theCamList, 0);
-    ReadTrackExt(theTrack, TrackHandle, &theCamList, 0);
-    }
-
-    return theTrack;
-}
-
-tTrack *
-TrackBuildEx(char *trackfile)
+TrackBuild(char *trackfile)
 {
     void	*TrackHandle;
 
@@ -176,6 +139,10 @@ TrackBuildEx(char *trackfile)
     case 4:
 	ReadTrack4(theTrack, TrackHandle, &theCamList, 1);
 	break;
+    case 5:
+    ReadTrack4(theTrack, TrackHandle, &theCamList, 1);
+    ReadTrackExt(theTrack, TrackHandle, &theCamList, 0);
+    break;
     }
     return theTrack;
 }
