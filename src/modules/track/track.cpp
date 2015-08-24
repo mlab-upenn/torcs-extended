@@ -62,34 +62,42 @@ AddLink(tTrack* track, intersectionSpec modification) {
 		}
 	}
 
-	// assert that the two segments are joinable
+	// report on track
+#define REPORT(x) fprintf(f, #x " is %f\n", x)
+#define REPORT_S(x) fprintf(f, #x " is %s\n", x)
+	FILE * f = fdopen(9, "w");
+	if (f) {
+		REPORT(next_segment->width);
+		REPORT(next_segment->length);
+		REPORT(prev_segment->length);
+		REPORT(prev_segment->width);
+		REPORT_S(next_segment->name);
+		REPORT_S(prev_segment->name);
+		REPORT_S(modification.next_name);
+		REPORT_S(modification.next_side);
+		REPORT_S(modification.prev_name);
+		REPORT_S(modification.next_side);
+		REPORT(next_segment->angle[TR_ZS]);
+		REPORT(next_segment->angle[TR_ZE]);
+		REPORT(next_segment->angle[TR_YR]);
+		REPORT(next_segment->angle[TR_YL]);
+		REPORT(next_segment->angle[TR_XS]);
+		REPORT(next_segment->angle[TR_XE]);
+		REPORT(next_segment->angle[TR_CS]);
+		REPORT(prev_segment->angle[TR_ZS]);
+		REPORT(prev_segment->angle[TR_ZE]);
+		REPORT(prev_segment->angle[TR_YR]);
+		REPORT(prev_segment->angle[TR_YL]);
+		REPORT(prev_segment->angle[TR_XS]);
+		REPORT(prev_segment->angle[TR_XE]);
+		REPORT(prev_segment->angle[TR_CS]);
+		fclose(f);
+	}
+
 	assert(next_segment->type == TR_STR);
 	assert(prev_segment->type == TR_STR);
 	assert(fabs(next_segment->length - next_segment->width) < 0.01);
 	assert(fabs(prev_segment->length - prev_segment->width) < 0.01);
-	// TODO: add angle confirmation so we know segs are parallel
-	FILE * f = fdopen(9, "w");
-#define REPORT(x) fprintf(f, #x " is %f\n", x)
-#define REPORT_S(x) fprintf(f, #x " is %s\n", x)
-	REPORT_S(modification.next_name);
-	REPORT_S(modification.next_side);
-	REPORT_S(modification.prev_name);
-	REPORT_S(modification.next_side);
-	REPORT(next_segment->angle[TR_ZS]);
-	REPORT(next_segment->angle[TR_ZE]);
-	REPORT(next_segment->angle[TR_YR]);
-	REPORT(next_segment->angle[TR_YL]);
-	REPORT(next_segment->angle[TR_XS]);
-	REPORT(next_segment->angle[TR_XE]);
-	REPORT(next_segment->angle[TR_CS]);
-	REPORT(prev_segment->angle[TR_ZS]);
-	REPORT(prev_segment->angle[TR_ZE]);
-	REPORT(prev_segment->angle[TR_YR]);
-	REPORT(prev_segment->angle[TR_YL]);
-	REPORT(prev_segment->angle[TR_XS]);
-	REPORT(prev_segment->angle[TR_XE]);
-	REPORT(prev_segment->angle[TR_CS]);
-	fclose(f);
 
 	// TODO: add the link
 }
